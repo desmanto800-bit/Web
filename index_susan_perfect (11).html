@@ -1,0 +1,463 @@
+<!DOCTYPE html><html lang='id'><head><meta charset='utf-8'><meta name='viewport' content='width=device-width,initial-scale=1'>
+<title>Selamat Ulang Tahun Susan</title>
+<link rel='preconnect' href='https://fonts.googleapis.com'>
+<link rel='preconnect' href='https://fonts.gstatic.com' crossorigin>
+<link href='https://fonts.googleapis.com/css2?family=Fredoka:wght@500;600;700&family=Poppins:wght@400;500;600&display=swap' rel='stylesheet'>
+<style>
+body{margin:0;background:linear-gradient(135deg,#ff9a9e,#fad0c4,#fbc2eb,#ff9a9e);background-size:300% 300%;animation:gradientGerak 14s ease infinite;font-family:'Poppins',Arial,sans-serif;min-height:100vh;overflow-x:hidden}
+@keyframes gradientGerak{0%{background-position:0% 50%}50%{background-position:100% 50%}100%{background-position:0% 50%}}
+h1,h2,h3{font-family:'Fredoka',sans-serif}
+#sky{position:fixed;inset:0;background:linear-gradient(180deg,#050318,#0b0a2e 40%,#1a1150 100%);opacity:0;transition:opacity 1.5s ease;z-index:-2;pointer-events:none}
+#sky.on{opacity:1}
+.star{position:absolute;background:#fff;border-radius:50%;animation:twinkle linear infinite}
+@keyframes twinkle{0%,100%{opacity:.2}50%{opacity:1}}
+.shooting-star{position:fixed;top:0;left:0;width:3px;height:3px;background:#fff;border-radius:50%;box-shadow:0 0 6px 2px #fff;z-index:0;opacity:0}
+.shooting-star::before{content:'';position:absolute;top:50%;right:0;width:90px;height:1px;background:linear-gradient(90deg,#fff,transparent);transform:translateY(-50%)}
+@keyframes shoot{0%{opacity:0;transform:translate(0,0)}5%{opacity:1}90%{opacity:1}100%{opacity:0;transform:translate(var(--dx),var(--dy))}}
+#kado{display:none;margin-top:10px}
+#kadoBtn{font-size:60px;background:none;border:none;cursor:pointer;transition:transform .25s ease;animation:goyang 1.4s ease-in-out infinite}
+@keyframes goyang{0%,100%{transform:rotate(0)}25%{transform:rotate(-8deg)}75%{transform:rotate(8deg)}}
+#kadoBtn.buka{animation:none;transform:scale(1.4) rotate(0deg);opacity:0;transition:transform .5s ease,opacity .5s ease}
+#pesan{display:none;text-align:left;line-height:1.7;opacity:0;transition:opacity .6s ease}
+#pesan.show{opacity:1}
+#fireCanvas{position:fixed;inset:0;width:100vw;height:100vh;z-index:-1;pointer-events:none}
+.card{max-width:420px;margin:30px auto;background:#fff8;padding:24px;border-radius:18px;text-align:center;position:relative;z-index:1}
+#area{position:relative;height:220px}.btn{padding:12px 20px;border:none;border-radius:30px;color:#fff;font-size:18px;cursor:pointer;box-shadow:0 4px 14px #0003;transition:transform .15s ease}
+.btn:active{transform:scale(.96)}
+#tua{background:#e91e63;position:absolute;left:50%;transform:translateX(-50%);top:20px}
+#muda{background:#2196f3;position:absolute;left:50%;transform:translateX(-50%);top:120px}
+#cake{display:none;font-size:90px}.flame{font-size:28px}
+.balloon{position:fixed;bottom:-60px;font-size:40px;animation:up 8s linear forwards;z-index:2}.conf{position:fixed;top:-10px;font-size:22px;animation:fall 3s linear forwards;z-index:2}
+@keyframes up{to{transform:translateY(-120vh)}}@keyframes fall{to{transform:translateY(110vh) rotate(720deg)}}
+#angka24{display:none;position:fixed;top:0;left:0;width:100vw;height:100vh;justify-content:center;align-items:center;text-align:center;font-size:160px;font-weight:bold;color:#fff;text-shadow:0 0 20px #ff1493;z-index:999;opacity:0;animation:pop .8s ease forwards}@keyframes pop{0%{opacity:0;transform:scale(.3);}100%{opacity:1;transform:scale(1);}}
+body{cursor:url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' width='32' height='32'><text y='24' font-size='24'>🎂</text></svg>") 16 16,auto}
+button,a{cursor:url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' width='32' height='32'><text y='24' font-size='24'>✨</text></svg>") 16 16,pointer}
+body.shake{animation:goyangLayar .5s cubic-bezier(.36,.07,.19,.97) both}
+@keyframes goyangLayar{10%,90%{transform:translateX(-2px)}20%,80%{transform:translateX(4px)}30%,50%,70%{transform:translateX(-8px)}40%,60%{transform:translateX(8px)}}
+#kuis{display:none;text-align:left}
+#kuis .opsi{display:flex;gap:10px;flex-wrap:wrap;margin-top:10px}
+#kuis .opsi button{flex:1;min-width:100px;background:#ff6f91;border:none;border-radius:12px;padding:10px;color:#fff;font-size:15px}
+#kuisJawab{margin-top:10px;font-style:italic;min-height:22px}
+#musicToggle{position:fixed;top:14px;right:14px;z-index:1000;background:#fff9;border:none;border-radius:50%;width:44px;height:44px;font-size:20px;display:none;box-shadow:0 2px 8px #0003}
+#screenshotBtn{display:none;margin-top:16px;background:#5c6bc0;color:#fff;border:none;border-radius:20px;padding:10px 18px;font-size:15px}
+#progresWrap{display:none;text-align:left;margin-top:18px}
+#progresLabel{font-weight:bold;margin-bottom:6px}
+#progresBarLuar{background:#0002;border-radius:20px;height:22px;overflow:hidden}
+#progresBarDalam{height:100%;width:0%;background:linear-gradient(90deg,#ff6f91,#ff9e00);border-radius:20px;transition:width .4s linear;display:flex;align-items:center;justify-content:flex-end;color:#fff;font-size:11px;font-weight:bold;padding-right:6px;box-sizing:border-box}
+#progresMilestone{margin-top:8px;font-style:italic;min-height:20px;text-align:center}
+#sertifikat{display:none;margin-top:20px;padding:20px;border:4px double #b8860b;border-radius:10px;background:#fffdf5;position:relative}
+#sertifikat h3{margin:0 0 4px;color:#b8860b;font-family:Georgia,serif}
+#sertifikat .subjudul{font-size:12px;letter-spacing:2px;color:#999;margin-bottom:14px}
+#sertifikat .nama{font-family:Georgia,serif;font-size:26px;color:#333;margin:10px 0}
+#sertifikat .ttd{margin-top:18px;font-family:cursive;font-size:20px;color:#333}
+#sertifikat .tgl{font-size:12px;color:#777;margin-top:4px}
+#sertifikat .cap{position:absolute;top:14px;right:16px;font-size:34px;opacity:.85;transform:rotate(12deg)}
+#gerbang{position:fixed;inset:0;z-index:2000;background:rgba(20,10,30,.55);backdrop-filter:blur(8px);-webkit-backdrop-filter:blur(8px);display:flex;align-items:center;justify-content:center;text-align:left;transition:opacity .5s ease}
+#gerbang.tutup{opacity:0;pointer-events:none}
+#gerbang .box{background:#fff;padding:26px 22px;border-radius:20px;max-width:320px;width:88%;text-align:center;box-shadow:0 10px 40px #0006;transition:transform .5s cubic-bezier(.34,1.56,.64,1),opacity .5s ease}
+#gerbang.tutup .box{transform:scale(.7);opacity:0}
+#pinBoxes{display:flex;justify-content:center;gap:8px;margin:16px 0}
+.pinKotak{width:38px;height:46px;border:3px solid #333;border-radius:8px;display:flex;align-items:center;justify-content:center;font-size:24px;font-weight:bold;transition:border-color .15s ease,transform .15s ease,box-shadow .15s ease}
+.pinKotak.isi{border-color:#e91e63;transform:scale(1.05);box-shadow:0 0 10px #e91e6377}
+#pinBoxes.salah .pinKotak{border-color:#e53935;animation:goyangPin .4s}
+@keyframes goyangPin{0%,100%{transform:translateX(0)}25%{transform:translateX(-6px)}75%{transform:translateX(6px)}}
+#pinKeypad{display:grid;grid-template-columns:repeat(3,1fr);gap:10px;margin-top:6px}
+#pinKeypad button{padding:14px 0;font-size:20px;font-weight:bold;border:2px solid #333;background:#fff;border-radius:12px;color:#333;box-shadow:0 3px 0 #0002;transition:transform .1s ease,box-shadow .1s ease}
+#pinKeypad button:active{background:#f48fb1;color:#fff;transform:translateY(2px);box-shadow:0 1px 0 #0002}
+#pinKeypad .kosong{visibility:hidden}
+.statusbar{font-size:11px;color:#999;letter-spacing:1px;margin-bottom:8px}
+.gembok{font-size:34px;margin-bottom:2px}
+#gerbangClue{margin-top:10px;min-height:20px;font-style:italic;color:#c2185b;text-align:center}
+#kontenUtama{display:none}
+</style></head><body>
+<div id='sky'></div><canvas id='fireCanvas'></canvas>
+<button id='musicToggle'>🔊</button>
+<div class='card'><h1>🎂 Selamat Ulang Tahun ke-24 Susan 🎉</h1>
+<div id='gerbang'>
+  <div class='box'>
+    <div class='statusbar'>9:41 &nbsp;•&nbsp; 📶 📡 🔋</div>
+    <div class='gembok'>🔒</div>
+    <p>Masukkan PIN rahasia dulu ya...</p>
+    <div id='pinBoxes'></div>
+    <div id='pinKeypad'>
+      <button data-n='1'>1</button><button data-n='2'>2</button><button data-n='3'>3</button>
+      <button data-n='4'>4</button><button data-n='5'>5</button><button data-n='6'>6</button>
+      <button data-n='7'>7</button><button data-n='8'>8</button><button data-n='9'>9</button>
+      <button class='kosong'></button><button data-n='0'>0</button><button id='pinHapus'>⌫</button>
+    </div>
+    <div id='gerbangClue'>&nbsp;</div>
+  </div>
+</div>
+<div id='kontenUtama'>
+<p>Hari ini kamu bertambah...</p>
+<div id='area'><button id='tua' class='btn'>👵 Bertambah Tua</button><button id='muda' class='btn'>👶 Bertambah Muda</button></div>
+<div id='cake'>🎂<div id='flame' class='flame'>🔥</div><button id='blow'>💨 Tiup Lilin</button></div>
+<div id='kuis'><p id='kuisText'></p><div class='opsi' id='kuisOpsi'></div><div id='kuisJawab'></div></div>
+<div id='kado'><p>Ada satu kado kecil buat Susan...</p><button id='kadoBtn'>🎁</button></div>
+<div id='pesan'></div>
+<div id='progresWrap'>
+  <div id='progresLabel'>📈 Perjalanan 24 Tahun Susan</div>
+  <div id='progresBarLuar'><div id='progresBarDalam'>0</div></div>
+  <div id='progresMilestone'>&nbsp;</div>
+</div>
+<div id='sertifikat'>
+  <div class='cap'>🏅</div>
+  <h3>SERTIFIKAT RESMI</h3>
+  <div class='subjudul'>YAYASAN ANTI-OVT SUSAN</div>
+  <p>Dengan ini menyatakan bahwa</p>
+  <div class='nama'>Susan</div>
+  <p>telah resmi berusia <b>24 tahun</b> dan dinyatakan LULUS sebagai:<br><b>"Pejuang Anti-Overthinking Tingkat Lanjut"</b> 🎓</p>
+  <div class='ttd'>Ades</div>
+  <div class='tgl'>Ketua Yayasan Anti-OVT Susan · 15 Juli</div>
+</div>
+<button id='screenshotBtn'>📸 Simpan Ucapan sebagai Gambar</button>
+</div>
+</div>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/html2canvas/1.4.1/html2canvas.min.js"></script>
+<script>
+/* === Gerbang PIN (keypad) === */
+const PIN_RAHASIA='210702';
+let pinSaatIni='';
+function gambarKotakPin(){
+  const wrap=document.getElementById('pinBoxes');
+  wrap.innerHTML='';
+  for(let i=0;i<PIN_RAHASIA.length;i++){
+    const k=document.createElement('div');
+    k.className='pinKotak'+(i<pinSaatIni.length?' isi':'');
+    k.textContent=i<pinSaatIni.length?pinSaatIni[i]:'';
+    wrap.appendChild(k);
+  }
+}
+gambarKotakPin();
+function cekGerbang(){
+  const clue=document.getElementById('gerbangClue');
+  const wrap=document.getElementById('pinBoxes');
+  if(pinSaatIni===PIN_RAHASIA){
+    const gerbang=document.getElementById('gerbang');
+    gerbang.classList.add('tutup');
+    setTimeout(()=>{
+      gerbang.style.display='none';
+      document.getElementById('kontenUtama').style.display='block';
+    },500);
+  }else{
+    clue.textContent='❌ PIN salah! Coba ingat tanggal lahirmu...';
+    wrap.classList.add('salah');
+    setTimeout(()=>{
+      wrap.classList.remove('salah');
+      pinSaatIni='';
+      gambarKotakPin();
+    },450);
+  }
+}
+document.getElementById('pinKeypad').addEventListener('click',e=>{
+  const btn=e.target.closest('button');
+  if(!btn)return;
+  if(btn.id==='pinHapus'){
+    pinSaatIni=pinSaatIni.slice(0,-1);
+    gambarKotakPin();
+    return;
+  }
+  if(btn.dataset.n===undefined)return;
+  if(pinSaatIni.length>=PIN_RAHASIA.length)return;
+  pinSaatIni+=btn.dataset.n;
+  gambarKotakPin();
+  if(pinSaatIni.length===PIN_RAHASIA.length){
+    setTimeout(cekGerbang,150);
+  }
+});
+
+const muda=document.getElementById('muda'),tua=document.getElementById('tua'),area=document.getElementById('area');
+function kabur(){muda.style.transform='none';muda.style.left=Math.random()*(area.clientWidth-140)+'px';muda.style.top=(100+Math.random()*90)+'px';}
+muda.onmouseenter=kabur;muda.ontouchstart=e=>{e.preventDefault();kabur();}
+function conf(){for(let i=0;i<100;i++){let d=document.createElement('div');d.className='conf';d.textContent='🎊';d.style.left=Math.random()*100+'vw';d.style.animationDelay=Math.random()*.5+'s';document.body.appendChild(d);setTimeout(()=>d.remove(),3500);}}
+function bal(){for(let i=0;i<10;i++){let b=document.createElement('div');b.className='balloon';b.textContent='🎈';b.style.left=Math.random()*100+'vw';b.style.animationDelay=i*.2+'s';document.body.appendChild(b);setTimeout(()=>b.remove(),9000);}}
+
+/* === Langit malam & bintang === */
+function nyalakanLangit(){
+  const sky=document.getElementById('sky');
+  sky.classList.add('on');
+  if(sky.dataset.filled)return;
+  sky.dataset.filled='1';
+  for(let i=0;i<120;i++){
+    let s=document.createElement('div');s.className='star';
+    let size=Math.random()*2.5+1;
+    s.style.width=size+'px';s.style.height=size+'px';
+    s.style.left=Math.random()*100+'vw';s.style.top=Math.random()*100+'vh';
+    s.style.animationDuration=(1.5+Math.random()*3)+'s';
+    s.style.animationDelay=Math.random()*3+'s';
+    sky.appendChild(s);
+  }
+  mulaiBintangJatuh();
+}
+
+/* === Bintang jatuh sesekali === */
+let bintangJatuhAktif=false;
+function mulaiBintangJatuh(){
+  if(bintangJatuhAktif)return;
+  bintangJatuhAktif=true;
+  (function jatuh(){
+    const s=document.createElement('div');s.className='shooting-star';
+    const startX=Math.random()*window.innerWidth*0.6;
+    const startY=Math.random()*window.innerHeight*0.35;
+    const dx=250+Math.random()*150,dy=140+Math.random()*100;
+    s.style.left=startX+'px';s.style.top=startY+'px';
+    s.style.setProperty('--dx',dx+'px');s.style.setProperty('--dy',dy+'px');
+    s.style.animation='shoot '+(1+Math.random()*.6)+'s ease-in forwards';
+    document.body.appendChild(s);
+    setTimeout(()=>s.remove(),1800);
+    setTimeout(jatuh,2500+Math.random()*3500);
+  })();
+}
+
+/* === Kembang api meriah di canvas === */
+const fc=document.getElementById('fireCanvas');const fx=fc.getContext('2d');let fireParticles=[];
+function resizeCanvas(){fc.width=window.innerWidth;fc.height=window.innerHeight;}
+resizeCanvas();window.addEventListener('resize',resizeCanvas);
+function letusanKembangApi(x,y){
+  const warna=['#ff4d6d','#ffd60a','#4cc9f0','#7bff6b','#c77dff','#ff9e00'];
+  const jumlah=45;
+  for(let i=0;i<jumlah;i++){
+    const sudut=(Math.PI*2/jumlah)*i;
+    const kecepatan=Math.random()*4+2;
+    fireParticles.push({
+      x,y,
+      vx:Math.cos(sudut)*kecepatan,
+      vy:Math.sin(sudut)*kecepatan,
+      hidup:1,
+      warna:warna[Math.floor(Math.random()*warna.length)]
+    });
+  }
+}
+function loopFireworks(){
+  fx.clearRect(0,0,fc.width,fc.height);
+  fireParticles.forEach(p=>{
+    p.x+=p.vx;p.y+=p.vy;p.vy+=0.03;p.hidup-=0.018;
+    fx.globalAlpha=Math.max(p.hidup,0);
+    fx.fillStyle=p.warna;
+    fx.beginPath();fx.arc(p.x,p.y,3,0,Math.PI*2);fx.fill();
+  });
+  fx.globalAlpha=1;
+  fireParticles=fireParticles.filter(p=>p.hidup>0);
+  requestAnimationFrame(loopFireworks);
+}
+loopFireworks();
+function pestaKembangApi(durasiMs){
+  const akhir=Date.now()+durasiMs;
+  (function tembak(){
+    letusanKembangApi(Math.random()*fc.width*0.8+fc.width*0.1,Math.random()*fc.height*0.5+30);
+    if(Date.now()<akhir)setTimeout(tembak,450+Math.random()*350);
+  })();
+}
+
+/* === Musik ulang tahun (disintesis, bebas lisensi) === */
+let musicCtx=null,musicStarted=false,masterGain=null,musicMuted=false;
+function mainkanMusikUlangTahun(){
+  if(musicStarted)return;musicStarted=true;
+  musicCtx=new (window.AudioContext||window.webkitAudioContext)();
+  masterGain=musicCtx.createGain();masterGain.gain.value=1;masterGain.connect(musicCtx.destination);
+  document.getElementById('musicToggle').style.display='block';
+  const G4=392,A4=440,B4=493.88,C5=523.25,D5=587.33,E5=659.25,F5=698.46,G5=783.99;
+  const not=[
+    [G4,.3],[G4,.3],[A4,.6],[G4,.6],[C5,.6],[B4,1.1],
+    [G4,.3],[G4,.3],[A4,.6],[G4,.6],[D5,.6],[C5,1.1],
+    [G4,.3],[G4,.3],[G5,.6],[E5,.6],[C5,.6],[B4,.6],[A4,1.1],
+    [F5,.3],[F5,.3],[E5,.6],[C5,.6],[D5,.6],[C5,1.3]
+  ];
+  function jadwalkan(){
+    let t=musicCtx.currentTime+0.1;
+    not.forEach(([freq,dur])=>{
+      const osc=musicCtx.createOscillator();const gain=musicCtx.createGain();
+      osc.type='triangle';osc.frequency.value=freq;
+      gain.gain.setValueAtTime(0.0001,t);
+      gain.gain.exponentialRampToValueAtTime(0.18,t+0.05);
+      gain.gain.exponentialRampToValueAtTime(0.0001,t+dur);
+      osc.connect(gain);gain.connect(masterGain);
+      osc.start(t);osc.stop(t+dur+0.05);
+      t+=dur;
+    });
+    setTimeout(jadwalkan,t*1000-musicCtx.currentTime*1000+1500);
+  }
+  jadwalkan();
+}
+document.getElementById('musicToggle').onclick=()=>{
+  musicMuted=!musicMuted;
+  if(masterGain)masterGain.gain.value=musicMuted?0:1;
+  document.getElementById('musicToggle').textContent=musicMuted?'🔇':'🔊';
+};
+const pesanHTML=`<h2>🥳 Selamat Ulang Tahun ke-24, Susan! 🎂</h2>
+<p>
+🤭 Tidak bisa memilih <b>'Bertambah Muda'</b>, ya?<br><br>
+
+Tenang, umur memang bertambah, tapi semangat, senyum, dan jiwa mudamu semoga tetap sama. Selamat ulang tahun, Susan! 🥳🎉🎁✨<br><br>
+
+Selamat hari menetas! Doaku simpel aja buat kamu: Semoga makin bahagia, makin sukses, dan yang paling penting... dijauhkan dari penyakit OVT (Overthinking) akut!<br><br>
+
+Tolong banget ya, pabrik overthinking di kepalamu itu dikurangi jam lemburnya. Kasihan sel otaknya kerja rodi 24/7 tanpa uang lembur. 😭<br><br>
+
+Kurang-kurangin mikirin hal yang belum tentu terjadi. Ingat, mikirin masa depan itu baik, tapi kalau sampai mikirin "Kenapa semut kalau jalan gak pernah pake helm?" atau "Apakah ikan pernah haus?"... itu udah gejala OD alias Overthinking Dini! 🤣<br><br>
+
+<b>Have a wonderful day, Susan! Kurangi OVT, banyakin happy! 🎂🤪</b><br><br>
+
+— Dari <b>Ades</b>, Ketua Yayasan Anti-OVT Susan 😎
+</p>`;
+
+/* === Progress bar perjalanan 24 tahun === */
+const milestoneList=[
+  {tahun:0,teks:'🍼 Lahir ke dunia'},
+  {tahun:5,teks:'🖍️ Doyan mewarnai di luar garis'},
+  {tahun:10,teks:'🎈 Ulang tahun paling heboh'},
+  {tahun:15,teks:'📱 Mulai kenal galau receh'},
+  {tahun:17,teks:'😵‍💫 Level overthinking: Beginner'},
+  {tahun:20,teks:'🎓 Overthinking: Intermediate'},
+  {tahun:24,teks:'👑 Overthinking: Pro Max — tapi tetap hebat!'}
+];
+function mulaiProgresPerjalanan(setelahSelesai){
+  const wrap=document.getElementById('progresWrap');
+  const bar=document.getElementById('progresBarDalam');
+  const ms=document.getElementById('progresMilestone');
+  wrap.style.display='block';
+  let tahun=0;
+  const sudahMuncul=new Set();
+  const interval=setInterval(()=>{
+    tahun++;
+    const persen=Math.round((tahun/24)*100);
+    bar.style.width=persen+'%';
+    bar.textContent=tahun;
+    const cocok=milestoneList.find(m=>m.tahun===tahun);
+    if(cocok&&!sudahMuncul.has(tahun)){
+      sudahMuncul.add(tahun);
+      ms.textContent=cocok.teks;
+    }
+    if(tahun>=24){
+      clearInterval(interval);
+      setTimeout(()=>{if(setelahSelesai)setelahSelesai();},900);
+    }
+  },160);
+}
+
+/* === Sertifikat penutup === */
+function tampilkanSertifikat(){
+  const s=document.getElementById('sertifikat');
+  s.style.display='block';
+  s.style.opacity='0';s.style.transform='scale(.9)';
+  s.style.transition='opacity .6s ease, transform .6s ease';
+  requestAnimationFrame(()=>{s.style.opacity='1';s.style.transform='scale(1)';});
+  document.getElementById('screenshotBtn').style.display='inline-block';
+}
+
+/* === Getar halus (jika perangkat mendukung) === */
+function getar(pola){ if(navigator.vibrate) navigator.vibrate(pola); }
+
+/* === Efek mengetik untuk pesan === */
+function ketikPesan(html,selesai){
+  const p=document.getElementById('pesan');
+  p.style.display='block';p.innerHTML='';
+  requestAnimationFrame(()=>p.classList.add('show'));
+  // pecah HTML jadi node sementara agar tag tetap utuh, teks diketik per karakter
+  const temp=document.createElement('div');temp.innerHTML=html;
+  const semuaNode=[];
+  (function kumpulkan(node,target){
+    node.childNodes.forEach(n=>{
+      if(n.nodeType===3){ // teks
+        const span=document.createElement('span');target.appendChild(span);
+        semuaNode.push({span,teks:n.textContent});
+      }else{
+        const clone=n.cloneNode(false);target.appendChild(clone);
+        kumpulkan(n,clone);
+      }
+    });
+  })(temp,p);
+  let i=0;
+  (function ketik(){
+    if(i>=semuaNode.length){if(selesai)selesai();return;}
+    const {span,teks}=semuaNode[i];
+    let j=span._pos||0;
+    if(j<teks.length){
+      span.textContent+=teks[j];
+      span._pos=j+1;
+      setTimeout(ketik,14);
+    }else{
+      i++;setTimeout(ketik,10);
+    }
+  })();
+}
+
+/* === Mini kuis receh sebelum kado === */
+const daftarKuis=[
+  {q:'Kira-kira, warna favorit Susan apa ya?',opsi:['Pink 🩷','Biru 💙'],jawab:['Cocok, feminin banget!','Pilihan yang tenang & adem!']},
+  {q:'Kalau ulang tahun, Susan lebih suka...',opsi:['Kue coklat 🍫','Kue vanila 🍰'],jawab:['Manis dan bikin semangat!','Klasik tapi selalu enak!']},
+  {q:'Menurutmu, hobi rahasia Susan tahun ini...',opsi:['Overthinking 😵‍💫','Rebahan santai 🛋️'],jawab:['Nah ini dia, sudah ketahuan!','Sehat sekali pilihannya!']}
+];
+function mulaiKuis(setelahSelesai){
+  const kuisDiv=document.getElementById('kuis');
+  const teksEl=document.getElementById('kuisText');
+  const opsiEl=document.getElementById('kuisOpsi');
+  const jawabEl=document.getElementById('kuisJawab');
+  kuisDiv.style.display='block';
+  let idx=0;
+  function tampilkan(){
+    if(idx>=daftarKuis.length){
+      setTimeout(()=>{kuisDiv.style.display='none';setelahSelesai();},900);
+      return;
+    }
+    const soal=daftarKuis[idx];
+    teksEl.textContent=`(${idx+1}/${daftarKuis.length}) ${soal.q}`;
+    jawabEl.textContent='';
+    opsiEl.innerHTML='';
+    soal.opsi.forEach((teks,i)=>{
+      const b=document.createElement('button');
+      b.textContent=teks;
+      b.onclick=()=>{
+        jawabEl.textContent='😄 '+soal.jawab[i];
+        Array.from(opsiEl.children).forEach(x=>x.disabled=true);
+        idx++;
+        setTimeout(tampilkan,1300);
+      };
+      opsiEl.appendChild(b);
+    });
+  }
+  tampilkan();
+}
+
+/* === Buka kado === */
+function bukaKado(){
+  const btn=document.getElementById('kadoBtn');
+  btn.classList.add('buka');
+  conf();
+  setTimeout(()=>{
+    document.getElementById('kado').style.display='none';
+    ketikPesan(pesanHTML,()=>{
+      mulaiProgresPerjalanan(()=>{
+        tampilkanSertifikat();
+      });
+    });
+  },550);
+}
+
+document.getElementById('screenshotBtn').onclick=()=>{
+  const btn=document.getElementById('screenshotBtn');
+  btn.textContent='⏳ Menyiapkan gambar...';
+  html2canvas(document.querySelector('.card'),{backgroundColor:'#ffe1ea'}).then(canvas=>{
+    const a=document.createElement('a');
+    a.download='ucapan-ulang-tahun-susan.png';
+    a.href=canvas.toDataURL('image/png');
+    a.click();
+    btn.textContent='📸 Simpan Ucapan sebagai Gambar';
+  });
+};
+
+tua.onclick=()=>{muda.style.display='none';document.getElementById('cake').style.display='block';conf();bal();nyalakanLangit();pestaKembangApi(6000);mainkanMusikUlangTahun();getar([40,60,40]);};
+blow.onclick=()=>{
+  document.getElementById('flame').textContent='💨';conf();pestaKembangApi(4000);getar(80);
+  document.body.classList.add('shake');
+  setTimeout(()=>document.body.classList.remove('shake'),500);
+  let a=document.getElementById('angka24');a.style.display='flex';a.style.opacity='0';requestAnimationFrame(()=>{a.style.opacity='1';});setTimeout(()=>a.style.display='none',5000);
+  document.getElementById('blow').style.display='none';
+  setTimeout(()=>{
+    mulaiKuis(()=>{
+      document.getElementById('kado').style.display='block';
+      document.getElementById('kadoBtn').onclick=bukaKado;
+    });
+  },1800);
+}
+</script><div id='angka24'>24 🎉</div></body></html>
